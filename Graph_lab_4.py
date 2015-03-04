@@ -36,7 +36,6 @@ def dfs_paths(graph, start, goal):
         (vertex, path) = stack.pop()
         for next in graph[vertex] - set(path):
             if next == goal:
-                print "next: %s == goal: %s" % (next, goal)
                 yield path + [next]
             else:
                 stack.append((next, path + [next]))
@@ -51,6 +50,24 @@ def bfs(graph, start):
             fringe.extend(graph[vertex] - visited) # Expand current node (i.e. put its children on the fringe and remove itself from fringe.)
     return visited
 # End bfs
+
+def bfs_paths(graph, start, goal):
+    queue = [(start, [start])]
+    while queue:
+        (vertex, path) = queue.pop(0)
+        for next in graph[vertex] - set(path):
+            if next == goal:
+                yield path + [next]
+            else:
+                queue.append((next, path + [next]))
+# End bfs_paths
+
+def shortest_path_bf(graph, start, goal):
+    try:
+        return next(bfs_paths(graph, start, goal))
+    except StopIteration:
+        return None
+# End shortest_path
 
 if __name__ == '__main__':
     # Graph
@@ -70,9 +87,17 @@ if __name__ == '__main__':
     print "Breadth-first search (bfs) visited:"
     print visitedBf # i.e. All nodes in the graph
 
-    # pathsToGoal = list(dfs_paths(graph1, 'A', 'F'))
+    pathsToGoal_bf = list(bfs_paths(graph1, 'A', 'F'))
+    print "Paths to goal (bfs_paths):"
+    print pathsToGoal_bf
+
+    shortestPathToGoal_bf = shortest_path_bf(graph1, 'A', 'F')
+    print "Paths to goal (shortest_path_bf):"
+    print shortestPathToGoal_bf
+
+    # pathsToGoal_df = list(dfs_paths(graph1, 'A', 'F'))
     # print "Paths to goal (dfs_paths):"
-    # print pathsToGoal
+    # print pathsToGoal_df
 
     # visited1A = dfs1(graph1, 'A')
     # print "Depth-first search (dfs1A) visited:"
