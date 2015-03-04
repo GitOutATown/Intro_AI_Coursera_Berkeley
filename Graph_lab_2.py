@@ -12,22 +12,20 @@ def dfs1(graph, start):
 
     while fringe:
         vertex = fringe.pop() # Stack
-        #print "vertex: %s" % vertex
+        print "vertex: %s" % vertex
         if vertex not in visited:
             visited.add(vertex)
             #print "visited:"
             #print visited
-            fringe.extend(graph[vertex] - visited) # Expand current node (i.e. put its children on the fringe and remove itself from fringe.)
+            if vertex in graph:
+                fringe.extend(graph[vertex] - visited) # Expand current node (i.e. put its children on the fringe and remove itself from fringe.)
             #print "fringe:"
             #print fringe
         # Iterate while, depth expansion. The author says this is recursive, but it's not. Nor does it backtrack. It just pops whatever is placed on the fringe, and therefor, as nodes expand their children go on the fringe and because it's a stack, pop emulates DFS.
     return visited
 # End dfs1
 
-# Depth-first search recursive.
-# Diagnostic Example:
-# start: A
-# graph[start]: set(['C', 'B'])
+# Depth-first search recursive. This seems to basically just iterate through the keys!
 # graph next: C
 # graph[next]: set(['A', 'F'])
 # next type: ['C']
@@ -36,7 +34,7 @@ def dfs2(graph, start, visited=None):
     if visited is None:
         visited = set()
     visited.add(start)
-    for next in graph[start] - visited: # next is a child node in the set belonging to start.
+    for next in graph[start] - visited: # next is a Dictionary key produced by iterator
         dfs2(graph, next, visited)
     return visited 
 # End dfs2   
@@ -47,9 +45,9 @@ if __name__ == '__main__':
         'A': set(['B', 'C']),
         'B': set(['A', 'D', 'E']),
         'C': set(['A', 'F']),
-        'D': set(['B']),
         'E': set(['B', 'F']),
         'F': set(['C', 'E'])
+        #'D': set(['B']),
     }
 
     print "Graph:"
@@ -63,13 +61,13 @@ if __name__ == '__main__':
     print "Depth-first search (dfs1C) visited:"
     print visited1C # i.e. All nodes in the graph
 
-    visited2A = dfs2(graph1, 'A')
-    print "Depth-first search (dfs2A) visited:"
-    print visited2A # i.e. All nodes in the graph
+    # visited2A = dfs2(graph1, 'A')
+    # print "Depth-first search (dfs2A) visited:"
+    # print visited2A # i.e. All nodes in the graph
 
-    visited2C = dfs2(graph1, 'C')
-    print "Depth-first search (dfs2C) visited:"
-    print visited2C # i.e. All nodes in the graph
+    # visited2C = dfs2(graph1, 'C')
+    # print "Depth-first search (dfs2C) visited:"
+    # print visited2C # i.e. All nodes in the graph
 
     # Print the graph
     import DotVis
