@@ -30,13 +30,16 @@ def dfs2(graph, start, visited=None):
     return visited 
 # End dfs2  
 
+# All paths DFS
 def dfs_paths(graph, start, goal):
     stack = [(start, [start])]
     while stack:
         (vertex, path) = stack.pop()
         for next in graph[vertex] - set(path):
             if next == goal:
-                yield path + [next]
+                completePath = path + [next]
+                #print "completePath: %s" % [completePath]
+                yield completePath
             else:
                 stack.append((next, path + [next]))
 
@@ -51,17 +54,23 @@ def bfs(graph, start):
     return visited
 # End bfs
 
+# All paths BFS
 def bfs_paths(graph, start, goal):
     queue = [(start, [start])]
     while queue:
         (vertex, path) = queue.pop(0)
+        #print "(vertex, path):"
+        #print (vertex, path)
         for next in graph[vertex] - set(path):
+            #print "next:"
+            #print next
             if next == goal:
                 yield path + [next]
             else:
                 queue.append((next, path + [next]))
 # End bfs_paths
 
+# Shortest path BFS
 def shortest_path_bf(graph, start, goal):
     try:
         return next(bfs_paths(graph, start, goal))
@@ -69,6 +78,7 @@ def shortest_path_bf(graph, start, goal):
         return None
 # End shortest_path
 
+# Main
 if __name__ == '__main__':
     # Graph
     graph1 = {
@@ -83,17 +93,17 @@ if __name__ == '__main__':
     print "Graph:"
     print graph1
 
-    visitedBf = bfs(graph1, 'A')
-    print "Breadth-first search (bfs) visited:"
-    print visitedBf # i.e. All nodes in the graph
+    # visitedBf = bfs(graph1, 'A')
+    # print "Breadth-first search (bfs) visited:"
+    # print visitedBf # i.e. All nodes in the graph
 
     pathsToGoal_bf = list(bfs_paths(graph1, 'A', 'F'))
     print "Paths to goal (bfs_paths):"
     print pathsToGoal_bf
 
-    shortestPathToGoal_bf = shortest_path_bf(graph1, 'A', 'F')
-    print "Paths to goal (shortest_path_bf):"
-    print shortestPathToGoal_bf
+    # shortestPathToGoal_bf = shortest_path_bf(graph1, 'A', 'F')
+    # print "Shortest path to goal (shortest_path_bf):"
+    # print shortestPathToGoal_bf
 
     # pathsToGoal_df = list(dfs_paths(graph1, 'A', 'F'))
     # print "Paths to goal (dfs_paths):"
@@ -115,7 +125,7 @@ if __name__ == '__main__':
     # print "Depth-first search (dfs2C) visited:"
     # print visited2C # i.e. All nodes in the graph
 
-    # # Print the graph
+    # Print the graph
     # import DotVis
     # dotGraph = DotVis.undirDotGraph(graph1)
     # dotGraph.render('/Users/hieronymus/Development/Courses/edX/Artificial Intelligence/Python/labs/DFS_intro_AI_4.gv', view=False)

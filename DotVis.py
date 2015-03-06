@@ -11,6 +11,7 @@
 # }
 
 from graphviz import Graph
+from graphviz import Digraph
 
 def isDuplicate(placed, edge):
     for placedEdge in placed:
@@ -28,3 +29,17 @@ def undirDotGraph(graph):
                 g.edge(key, neighbor)
                 placed.add(edge)
     return g
+
+def dirCostGraph(graph):
+    g = Digraph()
+    placed = set([])
+    for key in graph:
+        for neighbor in graph[key]:
+            edge = frozenset([key, neighbor]) # Hashing set of sets
+            if not isDuplicate(placed, edge):
+                g.edge(key, neighbor[0], label=(str(neighbor[1])))
+                placed.add(edge)
+    return g
+
+
+
