@@ -29,6 +29,7 @@ def univ_cost_paths(graph, start, goal):
                 v = (next[0], path + [next], cost + next[1])
                 fringe.append(v)
 
+# As soon as we reach the goal the first time, we are done--it is the cheepest.
 def cheepest_path_bf(graph, start, goal):
     try:
         return next(univ_cost_paths(graph, start, goal))
