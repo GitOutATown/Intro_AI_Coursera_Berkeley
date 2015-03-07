@@ -22,11 +22,9 @@ def univ_cost_paths(graph, start, goal):
         fringe = minCostRes[1]
         for next in graph[vertex] - set(path):
             if next[0] == goal:
-                completePath = path + [next]
-                yield (completePath, cost + next[1])
+                yield (path + [next], cost + next[1])
             else:
-                v = (next[0], path + [next], cost + next[1])
-                fringe.append(v)
+                fringe.append((next[0], path + [next], cost + next[1]))
 
 # As soon as we reach the goal the first time, we are done--it is the cheepest.
 def cheepest_path_bf(graph, start, goal):
