@@ -21,7 +21,6 @@ def univ_cost_paths(graph, start, goal):
         (vertex, path, cost) = minCostRes[0]
         fringe = minCostRes[1]
         for next in graph[vertex] - set(path):
-            pathPlusNext = path + [next]
             if next[0] == goal:
                 completePath = path + [next]
                 yield (completePath, cost + next[1])
