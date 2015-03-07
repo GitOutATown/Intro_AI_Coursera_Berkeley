@@ -1,29 +1,45 @@
 # Universal Cost Search
 
 def univ_cost_paths(graph, start, goal):
-    queue = [(start, [(start,0)])]
-    while queue:
-        ##print "queue:"
-        #print queue
-        (vertex, path) = queue.pop(0)
-        #print "(vertex, path):"
-        #print (vertex, path)
-        #print "expansion for %s:" % [vertex]
-        #print graph[vertex]
+    fringe = [(start, [(start,0)])]
+    while fringe:
+        print "fringe TOP:"
+        print fringe
+        (vertex, path) = fringe.pop(0)
+        print "(vertex, path):"
+        print (vertex, path)
+        print "expansion for %s:" % [vertex]
+        print graph[vertex]
+        print "set(path):"
+        print set(path)
+        print "graph[vertex] - set(path):"
+        print graph[vertex] - set(path)
+        print "fringe::"
+        print fringe
         for next in graph[vertex] - set(path):
-            #print "next:"
-            #print next
+            print "fringe:::"
+            print fringe
+            print "next:"
+            print next
+            print "graph[vertex]:"
+            print graph[vertex]
             pathPlusNext = path + [next]
-            #print "path + [next]:"
-            #print pathPlusNext
+            print "path + [next]:"
+            print pathPlusNext
             if next[0] == goal:
                 completePath = path + [next]
-                #print "completePath: %s" % [completePath]
+                print "completePath: %s" % [completePath]
                 yield completePath
             else:
-                #print "appending to queue:"
-                #print (next[0], path + [next])
-                queue.append((next[0], path + [next]))
+                print "===> path + [next]:"
+                print path + [next]
+                print "fringe before appending next tupple"
+                print fringe
+                print "appending to fringe:"
+                print (next[0], path + [next])
+                fringe.append((next[0], path + [next]))
+                print "---> fringe BOTTOM:"
+                print fringe
 
 if __name__ == '__main__':
     

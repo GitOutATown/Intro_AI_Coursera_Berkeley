@@ -33,6 +33,8 @@ def dfs2(graph, start, visited=None):
 # All paths DFS
 def dfs_paths(graph, start, goal):
     stack = [(start, [start])]
+    print "stack:"
+    print stack
     while stack:
         (vertex, path) = stack.pop()
         for next in graph[vertex] - set(path):
@@ -57,6 +59,8 @@ def bfs(graph, start):
 # All paths BFS
 def bfs_paths(graph, start, goal):
     queue = [(start, [start])]
+    print "queue:"
+    print queue
     while queue:
         (vertex, path) = queue.pop(0)
         #print "(vertex, path):"
